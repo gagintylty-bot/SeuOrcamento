@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Planos e valores · Matheus Vidic</title>
+<meta name="description" content="Edição de vídeo para clínicas de estética. Planos mensais a partir de R$ 497. Entrega em até 2 dias, pronto pra postar.">
+
+<!-- OG / preview no WhatsApp -->
+<meta property="og:title" content="Planos e valores · Matheus Vidic">
+<meta property="og:description" content="Edição de vídeo para clínicas de estética. Planos mensais, entrega em até 2 dias.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta name="theme-color" content="#0A0A0A">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   PALETA E BASE
+   ============================================================ */
+:root{
+  --bg:        #0A0A0A;
+  --surface:   #121210;
+  --surface-2: #171714;
+  --line:      rgba(255,255,255,.08);
+  --line-soft: rgba(255,255,255,.05);
+  --text:      #ECEAE3;
+  --muted:     #9B968A;
+  --faint:     #6E6A60;
+  --accent:    #C9A961;   /* dourado/champanhe — só em CTA, destaque e preços */
+  --accent-dim:rgba(201,169,97,.14);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-weight:400}
+a{color:inherit}
+
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+
+/* fade-in no scroll */
+.fade{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.fade.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .fade{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ============================================================
+   1 · HEADER ENXUTO
+   ============================================================ */
+header{padding:56px 0 12px;text-align:center}
+.brand{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.brand strong{color:var(--text);font-weight:600;letter-spacing:.14em}
+h1{
+  font-family:'Instrument Serif',Georgia,serif;
+  font-weight:400;
+  font-size:clamp(2.6rem,8vw,4.2rem);
+  line-height:1.05;
+  margin-top:22px;
+  letter-spacing:-.01em;
+}
+.sub{color:var(--muted);margin-top:10px;font-size:.95rem}
+
+/* ============================================================
+   2 · SELETOR "QUANTOS VÍDEOS POR SEMANA?"
+   ============================================================ */
+.selector{margin:44px auto 0;max-width:560px;text-align:center}
+.selector label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:16px;letter-spacing:.02em}
+.selector input[type=range]{
+  width:100%;appearance:none;-webkit-appearance:none;
+  height:2px;background:var(--line);border-radius:2px;outline:none;cursor:pointer;
+}
+.selector input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--accent);border:5px solid var(--bg);
+  box-shadow:0 0 0 1px var(--accent);cursor:grab;
+}
+.selector input[type=range]::-moz-range-thumb{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--accent);border:5px solid var(--bg);
+  box-shadow:0 0 0 1px var(--accent);cursor:grab;
+}
+.sel-scale{display:flex;justify-content:space-between;font-size:.72rem;color:var(--faint);margin-top:8px;padding:0 4px}
+.sel-result{margin-top:18px;min-height:56px;font-size:.95rem;color:var(--muted)}
+.sel-result strong{color:var(--text);font-weight:600}
+.sel-result .price{color:var(--accent);font-weight:600}
+.sel-result a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+
+/* ============================================================
+   3 · CARDS DOS PLANOS
+   ============================================================ */
+.plans{
+  display:grid;grid-template-columns:1fr;gap:16px;
+  margin-top:40px;align-items:stretch;
+}
+@media (min-width:820px){
+  .plans{grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:center}
+}
+.card{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:32px 26px 28px;
+  cursor:pointer;
+  transition:border-color .25s ease,transform .25s ease,background .25s ease;
+}
+.card:hover{border-color:rgba(255,255,255,.18)}
+.card.selected{border-color:var(--accent);background:var(--surface-2)}
+
+/* Domínio — plano destacado */
+.card.featured{
+  border-color:var(--accent);
+  background:var(--surface-2);
+}
+@media (min-width:820px){
+  .card.featured{transform:scale(1.045)}
+  .card.featured:hover{transform:scale(1.055)}
+}
+.badge{
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+  background:var(--accent);color:#0A0A0A;
+  font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 12px;border-radius:99px;white-space:nowrap;
+}
+.card h3{font-size:1.15rem;font-weight:600;line-height:1.3}
+.card .plan-name{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.card .total{color:var(--muted);font-size:.88rem;margin-top:2px}
+.card .price{
+  font-family:'Instrument Serif',Georgia,serif;
+  font-size:clamp(2.6rem,6vw,3rem);
+  line-height:1.1;color:var(--text);
+  margin-top:20px;letter-spacing:-.01em;
+}
+.card .price small{font-family:'Inter',sans-serif;font-size:.85rem;color:var(--muted);letter-spacing:0}
+.card.featured .price{color:var(--accent)}
+.per-video{
+  display:inline-block;margin-top:12px;
+  background:var(--accent-dim);color:var(--accent);
+  font-size:.85rem;font-weight:600;
+  padding:5px 12px;border-radius:8px;
+}
+.card ul{list-style:none;margin-top:20px;border-top:1px solid var(--line-soft);padding-top:18px}
+.card ul li{
+  font-size:.88rem;color:var(--muted);
+  padding:4px 0 4px 22px;position:relative;
+}
+.card ul li::before{
+  content:"";position:absolute;left:0;top:12px;
+  width:10px;height:6px;
+  border-left:1.5px solid var(--accent);border-bottom:1.5px solid var(--accent);
+  transform:rotate(-45deg);opacity:.85;
+}
+.card .pick{
+  display:block;text-align:center;margin-top:24px;
+  padding:12px;border-radius:10px;
+  border:1px solid var(--line);
+  font-size:.88rem;font-weight:500;color:var(--text);
+  text-decoration:none;transition:all .2s ease;
+}
+.card .pick:hover{border-color:var(--accent);color:var(--accent)}
+.card.featured .pick{background:var(--accent);border-color:var(--accent);color:#0A0A0A;font-weight:600}
+.card.featured .pick:hover{filter:brightness(1.08)}
+
+/* Avulso — linha discreta, NÃO é card */
+.avulso{
+  text-align:center;margin-top:26px;
+  font-size:.85rem;color:var(--faint);
+}
+.avulso a{color:var(--faint);text-decoration:underline;text-underline-offset:3px}
+.avulso a:hover{color:var(--muted)}
+
+/* comparação implícita */
+.compare{
+  text-align:center;margin-top:34px;
+  font-family:'Instrument Serif',Georgia,serif;
+  font-size:clamp(1.25rem,4vw,1.6rem);
+  color:var(--muted);
+}
+.compare em{color:var(--accent);font-style:italic}
+
+/* ============================================================
+   SEÇÕES GERAIS
+   ============================================================ */
+section{padding:72px 0 0}
+.eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h2{
+  font-family:'Instrument Serif',Georgia,serif;font-weight:400;
+  font-size:clamp(1.9rem,6vw,2.6rem);line-height:1.15;letter-spacing:-.01em;
+}
+.lead{color:var(--muted);margin-top:16px;max-width:560px}
+.lead strong{color:var(--text);font-weight:600}
+
+/* ============================================================
+   4 · DE ONDE SAEM TANTOS VÍDEOS
+   ============================================================ */
+.multiply{
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  margin-top:40px;flex-wrap:wrap;
+}
+.m-item{text-align:center;color:var(--muted);font-size:.78rem}
+.m-item svg{display:block;margin:0 auto 8px}
+.m-arrow{color:var(--accent);font-size:1.4rem;font-family:'Instrument Serif',Georgia,serif}
+.m-group{display:flex;gap:14px}
+
+/* ============================================================
+   5 · O QUE ESTÁ INCLUSO
+   ============================================================ */
+.scope{display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px}
+@media (min-width:820px){.scope{grid-template-columns:1fr 1fr}}
+.scope-box{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:16px;padding:30px 26px;
+}
+.scope-box.premium{border-color:rgba(201,169,97,.45)}
+.scope-box h3{font-size:1rem;font-weight:600}
+.scope-box .tag{
+  display:inline-block;font-size:.68rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:99px;margin-bottom:16px;
+}
+.scope-box .tag.base{background:rgba(255,255,255,.07);color:var(--muted)}
+.scope-box .tag.plus{background:var(--accent-dim);color:var(--accent)}
+.scope-list{list-style:none;margin-top:18px}
+.scope-list li{
+  padding:11px 0;border-bottom:1px solid var(--line-soft);
+  font-size:.88rem;
+}
+.scope-list li:last-child{border-bottom:none}
+.scope-list b{display:block;font-weight:600;color:var(--text)}
+.scope-list span{color:var(--muted);font-size:.84rem}
+.premium-price{
+  margin-top:20px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.9rem;color:var(--muted);
+}
+.premium-price .row{display:flex;justify-content:space-between;gap:12px;padding:4px 0}
+.premium-price .row strong{color:var(--accent);font-weight:600;white-space:nowrap}
+.premium-note{
+  margin-top:16px;font-family:'Instrument Serif',Georgia,serif;
+  font-size:1.15rem;color:var(--text);
+}
+.premium-opt{font-size:.8rem;color:var(--faint);margin-top:8px}
+
+/* ============================================================
+   6 · COMO FUNCIONA
+   ============================================================ */
+.steps{display:grid;grid-template-columns:1fr;gap:14px;margin-top:40px}
+@media (min-width:820px){.steps{grid-template-columns:1fr 1fr 1fr}}
+.step{
+  border:1px solid var(--line);border-radius:16px;
+  padding:26px 24px;background:var(--surface);
+}
+.step .num{
+  font-family:'Instrument Serif',Georgia,serif;
+  font-size:2rem;color:var(--accent);line-height:1;
+}
+.step p{margin-top:12px;font-size:.92rem;color:var(--muted)}
+.step p strong{color:var(--text);font-weight:600}
+
+/* ============================================================
+   7 · FAQ
+   ============================================================ */
+.faq{max-width:640px;margin:36px auto 0}
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{
+  cursor:pointer;list-style:none;
+  padding:20px 34px 20px 2px;position:relative;
+  font-size:.95rem;font-weight:500;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  color:var(--accent);font-size:1.3rem;font-weight:300;transition:transform .2s ease;
+}
+details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+details p{padding:0 2px 20px;color:var(--muted);font-size:.9rem;max-width:560px}
+
+/* ============================================================
+   8 · CTA FINAL
+   ============================================================ */
+.cta-final{text-align:center;padding:88px 0 64px}
+.cta-final h2{margin-bottom:8px}
+.cta-final p{color:var(--muted);font-size:.92rem;margin-bottom:32px}
+.btn-wa{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--accent);color:#0A0A0A;
+  font-weight:600;font-size:1rem;
+  padding:16px 32px;border-radius:12px;text-decoration:none;
+  transition:filter .2s ease,transform .2s ease;
+}
+.btn-wa:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-wa svg{flex-shrink:0}
+
+/* ============================================================
+   9 · RODAPÉ
+   ============================================================ */
+footer{
+  border-top:1px solid var(--line-soft);
+  padding:32px 0 120px;text-align:center;
+  font-size:.8rem;color:var(--faint);
+}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--accent)}
+@media (min-width:820px){footer{padding-bottom:48px}}
+
+/* CTA sticky — só no mobile */
+.sticky-cta{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(10,10,10,.88);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);
+}
+.sticky-cta a{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--accent);color:#0A0A0A;
+  font-weight:600;font-size:.95rem;
+  padding:14px;border-radius:12px;text-decoration:none;
+}
+@media (min-width:820px){.sticky-cta{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ============ 1 · HEADER ============ -->
+<header class="wrap">
+  <p class="brand"><strong>Matheus Vidic</strong> · Edição de vídeo para clínicas de estética</p>
+  <h1>Planos e valores</h1>
+  <p class="sub">Você grava com o celular. Eu entrego pronto pra postar.</p>
+</header>
+
+<!-- ============ 2 · PLANOS ============ -->
+<section class="wrap" id="planos" style="padding-top:20px">
+
+  <!-- Seletor: quantos vídeos por semana? -->
+  <div class="selector fade">
+    <label for="freq">Quantos vídeos por semana você quer postar?</label>
+    <input type="range" id="freq" min="1" max="8" step="1" value="7" aria-describedby="sel-result">
+    <div class="sel-scale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8+</span></div>
+    <p class="sel-result" id="sel-result" aria-live="polite"></p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       ⚠️ SEÇÃO DE PREÇOS — PARA TROCAR VALORES:
+       1. Edite os textos dos 3 cards abaixo (preço, custo/vídeo,
+          revisões, prazo).
+       2. Edite a linha do Avulso e a frase de comparação.
+       3. Atualize o objeto PLANS no <script> no fim da página
+          (usado pelo seletor acima). Nada mais depende disso.
+       ══════════════════════════════════════════════════════════ -->
+  <div class="plans">
+
+    <!-- PLANO 1 · ESSENCIAL — R$ 497/mês · 8 vídeos · R$ 62/vídeo -->
+    <article class="card fade" data-plan="Essencial" tabindex="0" role="button" aria-label="Selecionar plano Essencial">
+      <p class="plan-name">Essencial</p>
+      <h3>2 vídeos por semana</h3>
+      <p class="total">8 vídeos no mês</p>
+      <p class="price">R$ 497<small>/mês</small></p>
+      <span class="per-video">R$ 62 por vídeo</span>
+      <ul>
+        <li>Edição completa em todos os vídeos</li>
+        <li>1 revisão por vídeo</li>
+        <li>Entrega em 3 dias úteis</li>
+      </ul>
+      <a class="pick" href="https://wa.me/5547997325778?text=Oi%20Matheus!%20Tenho%20interesse%20no%20plano%20Essencial">Fechar no WhatsApp</a>
+    </article>
+
+    <!-- PLANO 3 · DOMÍNIO ⭐ — R$ 1.200/mês · 28 vídeos · R$ 43/vídeo -->
+    <article class="card featured fade" data-plan="Domínio" tabindex="0" role="button" aria-label="Selecionar plano Domínio, o mais escolhido">
+      <span class="badge">Mais escolhido</span>
+      <p class="plan-name">Domínio</p>
+      <h3>7 vídeos por semana</h3>
+      <p class="total">28 vídeos no mês</p>
+      <p class="price">R$ 1.200<small>/mês</small></p>
+      <span class="per-video">R$ 43 por vídeo</span>
+      <ul>
+        <li>Edição completa em todos os vídeos</li>
+        <li>Revisões ilimitadas</li>
+        <li>Entrega prioritária, em 2 dias úteis</li>
+      </ul>
+      <a class="pick" href="https://wa.me/5547997325778?text=Oi%20Matheus!%20Tenho%20interesse%20no%20plano%20Dom%C3%ADnio">Fechar no WhatsApp</a>
+    </article>
+
+    <!-- PLANO 2 · CONSTANTE — R$ 997/mês · 20 vídeos · R$ 50/vídeo -->
+    <article class="card fade" data-plan="Constante" tabindex="0" role="button" aria-label="Selecionar plano Constante">
+      <p class="plan-name">Constante</p>
+      <h3>5 vídeos por semana</h3>
+      <p class="total">20 vídeos no mês</p>
+      <p class="price">R$ 997<small>/mês</small></p>
+      <span class="per-video">R$ 50 por vídeo</span>
+      <ul>
+        <li>Edição completa em todos os vídeos</li>
+        <li>2 revisões por vídeo</li>
+        <li>Entrega em 2 dias úteis</li>
+      </ul>
+      <a class="pick" href="https://wa.me/5547997325778?text=Oi%20Matheus!%20Tenho%20interesse%20no%20plano%20Constante">Fechar no WhatsApp</a>
+    </article>
+
+  </div>
+
+  <!-- Avulso: âncora de preço, linha discreta — nunca vira card -->
+  <p class="avulso fade">
+    Vídeo avulso, sem plano: R$ 80 · 1 revisão · entrega em 3 dias úteis ·
+    <a href="https://wa.me/5547997325778?text=Oi%20Matheus!%20Tenho%20interesse%20em%20um%20v%C3%ADdeo%20avulso">pedir avulso</a>
+  </p>
+
+  <p class="compare fade">No Domínio, cada vídeo sai por <em>R$ 43</em>. Avulso, R$ 80.</p>
+</section>
+
+<!-- ============ 3 · DE ONDE SAEM TANTOS VÍDEOS ============ -->
+<section class="wrap" id="volume">
+  <div class="fade">
+    <p class="eyebrow">A dúvida mais comum</p>
+    <h2>De onde saem tantos vídeos?</h2>
+    <p class="lead">Você não precisa gravar 7 vezes por semana. <strong>De uma gravação de procedimento eu tiro 3 vídeos diferentes:</strong> o antes e depois, o detalhe da técnica e o momento da paciente. Você grava 2 vezes na semana — eu entrego 7.</p>
+  </div>
+
+  <div class="multiply fade" aria-hidden="true">
+    <div class="m-item">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+        <rect x="4" y="12" width="24" height="20" rx="4" stroke="#C9A961" stroke-width="1.5"/>
+        <path d="M28 19l10-5v16l-10-5" stroke="#C9A961" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="16" cy="22" r="3.5" stroke="#C9A961" stroke-width="1.5"/>
+      </svg>
+      1 gravação
+    </div>
+    <span class="m-arrow">→</span>
+    <div class="m-group">
+      <div class="m-item">
+        <svg width="38" height="44" viewBox="0 0 38 44" fill="none">
+          <rect x="7" y="4" width="24" height="36" rx="5" stroke="#ECEAE3" stroke-width="1.5"/>
+          <path d="M16 17l8 5-8 5v-10z" fill="#C9A961"/>
+        </svg>
+        Antes e depois
+      </div>
+      <div class="m-item">
+        <svg width="38" height="44" viewBox="0 0 38 44" fill="none">
+          <rect x="7" y="4" width="24" height="36" rx="5" stroke="#ECEAE3" stroke-width="1.5"/>
+          <path d="M16 17l8 5-8 5v-10z" fill="#C9A961"/>
+        </svg>
+        Detalhe da técnica
+      </div>
+      <div class="m-item">
+        <svg width="38" height="44" viewBox="0 0 38 44" fill="none">
+          <rect x="7" y="4" width="24" height="36" rx="5" stroke="#ECEAE3" stroke-width="1.5"/>
+          <path d="M16 17l8 5-8 5v-10z" fill="#C9A961"/>
+        </svg>
+        Momento da paciente
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 · O QUE ESTÁ INCLUSO ============ -->
+<section class="wrap" id="incluso">
+  <div class="fade">
+    <p class="eyebrow">Escopo, sem letra miúda</p>
+    <h2>O que está incluso</h2>
+  </div>
+
+  <div class="scope">
+    <div class="scope-box fade">
+      <span class="tag base">Incluso em todos os planos</span>
+      <h3>Edição completa</h3>
+      <ul class="scope-list">
+        <li><b>Cortes e ritmo</b><span>Vídeo enxuto, sem pausa morta</span></li>
+        <li><b>Correção de cor</b><span>Pele natural, sem o amarelado de celular</span></li>
+        <li><b>Tratamento de imagem com IA</b><span>Nítido mesmo gravado às pressas</span></li>
+        <li><b>Legendas animadas</b><span>Prende quem assiste sem som</span></li>
+        <li><b>Textos e títulos</b><span>Informação clara na tela</span></li>
+        <li><b>Trilha e efeitos sonoros</b><span>Ritmo e acabamento</span></li>
+        <li><b>Formato pronto pra postar</b><span>9:16, Reels e TikTok</span></li>
+      </ul>
+    </div>
+
+    <div class="scope-box premium fade">
+      <span class="tag plus">Adicional · edição premium</span>
+      <h3>Acabamento de clínica grande</h3>
+      <ul class="scope-list">
+        <li><b>Texto 3D</b><span>Títulos com profundidade e movimento no espaço</span></li>
+        <li><b>Motion tracking</b><span>Elementos que acompanham o movimento da câmera</span></li>
+        <li><b>Elementos gráficos animados</b><span>Setas, marcações, destaques em movimento</span></li>
+        <li><b>Composição no After Effects</b><span>Finalização de outro nível</span></li>
+      </ul>
+      <!-- ⚠️ PREÇOS DO ADICIONAL PREMIUM — editar aqui -->
+      <div class="premium-price">
+        <div class="row"><span>Com plano ativo</span><strong>+ R$ 100 por vídeo</strong></div>
+        <div class="row"><span>Avulso, sem plano</span><strong>+ R$ 200 por vídeo</strong></div>
+      </div>
+      <p class="premium-note">Quem tem plano paga metade no premium.</p>
+      <p class="premium-opt">Opcional e por vídeo: você escolhe em quais vale a pena. Ninguém precisa pagar premium em todos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 · COMO FUNCIONA ============ -->
+<section class="wrap" id="como">
+  <div class="fade">
+    <p class="eyebrow">Simples de verdade</p>
+    <h2>Como funciona</h2>
+  </div>
+  <div class="steps">
+    <div class="step fade">
+      <span class="num serif">1</span>
+      <p><strong>Você grava normal,</strong> com o celular mesmo. Sem equipe, sem equipamento.</p>
+    </div>
+    <div class="step fade">
+      <span class="num serif">2</span>
+      <p><strong>Manda os brutos</strong> pelo WhatsApp ou Drive, do jeito que saíram.</p>
+    </div>
+    <div class="step fade">
+      <span class="num serif">3</span>
+      <p><strong>Recebe pronto pra postar</strong> em até 2 dias úteis.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 · FAQ ============ -->
+<section class="wrap" id="faq">
+  <div class="fade" style="text-align:center">
+    <p class="eyebrow">Perguntas diretas</p>
+    <h2>Antes de fechar</h2>
+  </div>
+  <div class="faq fade">
+    <details>
+      <summary>Preciso assinar contrato de fidelidade?</summary>
+      <p>Não. É mensal. Cancela quando quiser, sem multa e sem aviso de 30 dias.</p>
+    </details>
+    <details>
+      <summary>E se eu não gostar do vídeo?</summary>
+      <p>Cada plano inclui revisões. Ajusto até ficar do jeito que você quer — no Domínio, sem limite de ajustes.</p>
+    </details>
+    <details>
+      <summary>Não consigo gravar tudo isso.</summary>
+      <p>Não precisa. De uma gravação saem vários vídeos: o antes e depois, o detalhe da técnica, o momento da paciente. Você grava 2 vezes na semana e a agenda do mês fecha.</p>
+    </details>
+    <details>
+      <summary>Quem grava?</summary>
+      <p>Você mesma, com o celular. Eu cuido de todo o resto: corte, cor, legenda, trilha e formato.</p>
+    </details>
+    <details>
+      <summary>Como funciona o pagamento?</summary>
+      <p>PIX mensal, no início de cada ciclo. Vídeo avulso e adicionais premium são cobrados junto ou à parte, como preferir.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 7 · CTA FINAL ============ -->
+<section class="cta-final wrap" id="fechar">
+  <div class="fade">
+    <h2>Fechamos?</h2>
+    <p>Me chama no WhatsApp e a gente começa essa semana.</p>
+    <a class="btn-wa" id="cta-main" href="https://wa.me/5547997325778?text=Oi%20Matheus!%20Vi%20os%20planos%20e%20quero%20fechar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a9.94 9.94 0 0 0-8.59 15.06L2 22l5.09-1.36A10 10 0 1 0 12 2zm0 18.18a8.16 8.16 0 0 1-4.16-1.14l-.3-.18-3.02.8.81-2.94-.2-.31A8.18 8.18 0 1 1 12 20.18zm4.49-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.35-2.93c-.25-.43.25-.4.72-1.34.08-.16.04-.3-.02-.43-.06-.12-.55-1.34-.76-1.83-.2-.48-.4-.42-.56-.42h-.47c-.17 0-.43.06-.66.3-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.6.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.18.2-.57.2-1.06.14-1.17-.06-.1-.22-.16-.47-.28z"/></svg>
+      Chamar no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ============ 8 · RODAPÉ ============ -->
+<footer class="wrap">
+  <p>Matheus Vidic · <a href="https://instagram.com/matheusvidic._" rel="noopener" target="_blank">@matheusvidic._</a></p>
+  <p style="margin-top:6px">Trabalhos e exemplos no Instagram</p>
+</footer>
+
+<!-- CTA sticky (mobile) -->
+<div class="sticky-cta">
+  <a id="cta-sticky" href="https://wa.me/5547997325778?text=Oi%20Matheus!%20Vi%20os%20planos%20e%20quero%20fechar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a9.94 9.94 0 0 0-8.59 15.06L2 22l5.09-1.36A10 10 0 1 0 12 2zm0 18.18a8.16 8.16 0 0 1-4.16-1.14l-.3-.18-3.02.8.81-2.94-.2-.31A8.18 8.18 0 1 1 12 20.18zm4.49-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.35-2.93c-.25-.43.25-.4.72-1.34.08-.16.04-.3-.02-.43-.06-.12-.55-1.34-.76-1.83-.2-.48-.4-.42-.56-.42h-.47c-.17 0-.43.06-.66.3-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.6.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.18.2-.57.2-1.06.14-1.17-.06-.1-.22-.16-.47-.28z"/></svg>
+    <span id="cta-sticky-label">Chamar no WhatsApp</span>
+  </a>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   ⚠️ CONFIG DE PREÇOS DO SELETOR
+   Se mudar os valores nos cards acima, atualize aqui também.
+   Cada plano: nome (igual ao data-plan do card), preço/mês
+   formatado, total de vídeos/mês e custo por vídeo.
+   ══════════════════════════════════════════════════════════════ */
+const WHATSAPP = '5547997325778';
+const PLANS = {
+  'Essencial': { price: 'R$ 497/mês',   total: '8 vídeos no mês',  perVideo: 'R$ 62' },
+  'Constante': { price: 'R$ 997/mês',   total: '20 vídeos no mês', perVideo: 'R$ 50' },
+  'Domínio':   { price: 'R$ 1.200/mês', total: '28 vídeos no mês', perVideo: 'R$ 43' }
+};
+/* Quantos vídeos/semana levam a qual plano (índices 1 a 7).
+   Acima de 7 → "Vamos conversar". */
+const WEEK_TO_PLAN = { 1:'Essencial', 2:'Essencial', 3:'Constante', 4:'Constante', 5:'Constante', 6:'Domínio', 7:'Domínio' };
+
+/* ---------- link do WhatsApp ---------- */
+function waLink(msg){
+  return 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
+}
+
+/* ---------- seleção de plano: cards + CTAs ---------- */
+const cards = document.querySelectorAll('.card');
+const ctaMain = document.getElementById('cta-main');
+const ctaSticky = document.getElementById('cta-sticky');
+const ctaStickyLabel = document.getElementById('cta-sticky-label');
+
+function selectPlan(name){
+  cards.forEach(c => c.classList.toggle('selected', c.dataset.plan === name));
+  const url = waLink('Oi Matheus! Tenho interesse no plano ' + name);
+  ctaMain.href = url;
+  ctaSticky.href = url;
+  ctaStickyLabel.textContent = 'Fechar plano ' + name;
+}
+
+cards.forEach(card => {
+  card.addEventListener('click', e => {
+    if (e.target.closest('a')) return; // clique no botão do card segue direto
+    selectPlan(card.dataset.plan);
+  });
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPlan(card.dataset.plan); }
+  });
+});
+
+/* ---------- seletor "quantos vídeos por semana?" ---------- */
+const freq = document.getElementById('freq');
+const selResult = document.getElementById('sel-result');
+
+function updateSelector(){
+  const n = parseInt(freq.value, 10);
+  if (n > 7) {
+    selResult.innerHTML =
+      'Mais de 7 por semana? <a href="' +
+      waLink('Oi Matheus! Preciso de mais de 7 vídeos por semana, vamos conversar?') +
+      '">Vamos conversar</a>';
+    cards.forEach(c => c.classList.remove('selected'));
+    return;
+  }
+  const name = WEEK_TO_PLAN[n];
+  const p = PLANS[name];
+  selResult.innerHTML =
+    n + (n === 1 ? ' vídeo' : ' vídeos') + ' por semana → plano <strong>' + name +
+    '</strong> · <span class="price">' + p.price + '</span><br>' +
+    p.total + ' · ' + p.perVideo + ' por vídeo';
+  selectPlan(name);
+}
+
+freq.addEventListener('input', updateSelector);
+updateSelector();
+
+/* ---------- fade-in no scroll ---------- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
